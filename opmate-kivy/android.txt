@@ -1,0 +1,3 @@
+title=remotecontrol
+author=girish joshi
+orientation=portrait
