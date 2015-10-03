@@ -7,8 +7,11 @@ import clipboard
 import os
 
 def showShutdown():
-    
-    os.system('mate-session-save --shutdown-dialog')
+    print "shutdown pressed"
+    if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
+        os.system('gnome-session-quit --reboot')
+    elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate':
+        os.system('mate-session-save --shutdown-dialog')
 
 def notify(message):
     """
@@ -46,7 +49,7 @@ def fileviewer():
         so this will start caja at /media/
     """
     notify('opening fileviewer at /media/')
-    program = 'caja'
+    program = 'xdg-open'
     arg =  '/media/'
     run(program , arg)
 
@@ -56,12 +59,18 @@ def show_desktop():
     the desktop.
     """
     #notify('show desktop')
-    p.keyDown('alt')
-    p.keyDown('ctrl')
-    p.keyDown('d')
-    p.keyUp('d')
-    p.keyUp('ctrl')
-    p.keyUp('alt')
+    if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
+        p.keyDown('winleft')
+        p.keyDown('d')
+        p.keyUp('d')
+        p.keyUp('winleft')
+    elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate':
+        p.keyDown('alt')
+        p.keyDown('ctrl')
+        p.keyDown('d')
+        p.keyUp('d')
+        p.keyUp('ctrl')
+        p.keyUp('alt')
 
 def alt_tab():
     """
