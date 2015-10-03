@@ -1,2 +1,2 @@
 # op-mate
-the android application written using kivy framework to operate mate desktop.
+the android application written using kivy framework to operate Mate and Unity desktop.
