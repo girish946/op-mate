@@ -78,12 +78,18 @@ def alt_tab():
     opened window.
     """
     #notify('switch window')
-    p.keyDown('alt')
-    p.keyDown('shift')
-    p.keyDown('\t')
-    p.keyUp('\t')
-    p.keyUp('shift')
-    p.keyUp('alt')
+    if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
+        p.keyDown('alt')
+        p.keyDown('\t')
+        p.keyUp('\t')
+        p.keyUp('alt')
+    elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate': 
+        p.keyDown('alt')
+        p.keyDown('shift')
+        p.keyDown('\t')
+        p.keyUp('\t')
+        p.keyUp('shift')
+        p.keyUp('alt')
 
 def close():
     """
