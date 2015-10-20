@@ -6,12 +6,14 @@ from threading import Thread
 import clipboard
 import os
 
+
 def showShutdown():
     print "shutdown pressed"
     if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
         os.system('gnome-session-quit --reboot')
     elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate':
         os.system('mate-session-save --shutdown-dialog')
+
 
 def notify(message):
     """
@@ -21,11 +23,11 @@ def notify(message):
            -t 2000 -i ~/.slightgen/logo.png'.format(message))
 
 
-def run(program , *arg):
+def run(program, *arg):
     pid = os.fork()
     if not pid:
         print type(arg)
-        os.execvp(program,(program,)+arg)
+        os.execvp(program, (program, )+arg)
     return os.wait()[0]
 
 
@@ -36,8 +38,9 @@ def power():
     """
     notify('pressed power')
     show_desktop()
-    t = Thread(target= showShutdown)
+    t = Thread(target=showShutdown)
     t.start()
+
 
 def fileviewer():
     """
@@ -50,15 +53,15 @@ def fileviewer():
     """
     notify('opening fileviewer at /media/')
     program = 'xdg-open'
-    arg =  '/media/'
-    run(program , arg)
+    arg = '/media/'
+    run(program, arg)
+
 
 def show_desktop():
     """
     this method minimizes all the opened windows and will show
     the desktop.
     """
-    #notify('show desktop')
     if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
         p.keyDown('winleft')
         p.keyDown('d')
@@ -72,24 +75,25 @@ def show_desktop():
         p.keyUp('ctrl')
         p.keyUp('alt')
 
+
 def alt_tab():
     """
-    this method takes the control to the previously 
+    this method takes the control to the previously
     opened window.
     """
-    #notify('switch window')
     if os.environ['XDG_CURRENT_DESKTOP'] == 'Unity':
         p.keyDown('alt')
         p.keyDown('\t')
         p.keyUp('\t')
         p.keyUp('alt')
-    elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate': 
+    elif os.environ['XDG_CURRENT_DESKTOP'].lower() == 'mate':
         p.keyDown('alt')
         p.keyDown('shift')
         p.keyDown('\t')
         p.keyUp('\t')
         p.keyUp('shift')
         p.keyUp('alt')
+
 
 def close():
     """
@@ -100,6 +104,7 @@ def close():
     p.keyUp('f4')
     p.keyUp('alt')
 
+
 def cut():
     """
     this method presses ctrl+x of the virtual key board.
@@ -108,7 +113,8 @@ def cut():
     p.keyDown('x')
     p.keyUp('x')
     p.keyUp('ctrl')
-    notify('cut '+ clipboard.paste())
+    notify('cut ' + clipboard.paste())
+
 
 def copy():
     """
@@ -118,7 +124,8 @@ def copy():
     p.keyDown('c')
     p.keyUp('c')
     p.keyUp('ctrl')
-    notify('copy '+ clipboard.paste())
+    notify('copy ' + clipboard.paste())
+
 
 def paste():
     """
@@ -128,7 +135,8 @@ def paste():
     p.keyDown('v')
     p.keyUp('v')
     p.keyUp('ctrl')
-    notify('paste '+ clipboard.paste())
+    notify('paste ' + clipboard.paste())
+
 
 def startup_menu():
     """
@@ -139,42 +147,55 @@ def startup_menu():
     p.keyUp('f1')
     p.keyUp('alt')
 
+
 def enter():
     p.press('\n')
+
 
 def F5():
     notify('F5 pressed')
     p.press('f5')
 
+
 def backspace():
     p.press('\b')
+
 
 def pageup():
     p.press('pageup')
 
+
 def pagedown():
     p.press('pagedown')
+
 
 def left():
     p.press('left')
 
+
 def right():
     p.press('right')
+
 
 def up():
     p.press('up')
 
+
 def down():
     p.press('down')
+
 
 def home():
     p.press('home')
 
+
 def end():
     p.press('end')
 
+
 def tab():
     p.press('\t')
+
 
 def escape():
     notify('escape pressed')
